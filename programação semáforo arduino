@@ -1,0 +1,59 @@
+# SEMAFORO
+byte vmPin = 13;//variável led vermelho
+byte amPin = 12;//variável led amarelo
+byte vdPin = 11;//variável led verde
+
+unsigned long vdTempo = 3000;//variável longa de tempo para verde
+unsigned long amTempo = 2000;//variável longa de tempo para amarelo
+unsigned long vmTempo = 5000;//variável longa de tempo para vermelho
+
+unsigned long evento = 0;//variável longa de tempo para evento
+bool statusVD = 1;//variável booleana para status verde
+bool statusAM = 0;//variável booleana para status amarelo
+bool statusVM = 0;//variável booleana para status vermelho
+
+void setup()
+{
+  pinMode(vmPin, OUTPUT);//define led vermelho como saída
+  pinMode(vdPin, OUTPUT);//define led verde como saída
+  pinMode(amPin, OUTPUT);//define led amarelo como saída
+  digitalWrite(vdPin, HIGH);//ligar led verde
+ }
+void loop()
+{
+  if (statusVD == 1)
+  {
+    if ((millis() - evento) >=vdTempo)
+    {
+      digitalWrite(vdPin, LOW);
+      statusVD=0;
+      digitalWrite(amPin, HIGH);
+      statusAM=1;
+      evento=millis();
+    }
+  }
+   if (statusAM == 1)
+  {
+    if ((millis() - evento) >=amTempo)
+    {
+      digitalWrite(amPin, LOW);
+      statusAM=0;
+      digitalWrite(vmPin, HIGH);
+      statusVM=1;
+      evento=millis();
+
+    }
+  }
+    if (statusVM == 1)
+  {
+    if ((millis() - evento) >=vmTempo)
+    {
+      digitalWrite(vmPin, LOW);
+      statusVM=0;
+      digitalWrite(vdPin, HIGH);
+      statusVD=1;
+      evento=millis();
+
+    }
+  }
+}
